@@ -1,5 +1,6 @@
-var traceurAPI = require('traceur/src/node/api.js'),
-	path = require('path');
+var traceurAPI = require('traceur/src/node/api.js');
+var path = require('path');
+var fs = require('fs');
 
 function TraceurCompiler(config) {
 	this.shouldCompile = /^app/;
@@ -45,8 +46,15 @@ TraceurCompiler.prototype.compile = function(data, path, callback) {
 	});
 };
 
-TraceurCompiler.prototype.include = [
-	path.join(__dirname, 'node_modules', 'traceur', 'bin', 'traceur-runtime.js')
-];
+var nestedPath = path.join(__dirname, 'node_modules', 'traceur', 'bin', 'traceur-runtime.js');
+var flatPath = path.join(process.cwd(), 'node_modules', 'traceur', 'bin', 'traceur-runtime.js');
+
+fs.lstat(nestedPath, function(err, stats) {
+    if (!err && stats.isDirectory()) {
+        TraceurCompiler.prototype.include = [nestedPath];
+    } else {
+        TraceurCompiler.prototype.include = [flatPath];
+    }
+});
 
 module.exports = TraceurCompiler;
