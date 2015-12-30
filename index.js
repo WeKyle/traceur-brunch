@@ -47,7 +47,7 @@ TraceurCompiler.prototype.compile = function(data, path, callback) {
 };
 
 var nestedPath = path.join(__dirname, 'node_modules', 'traceur', 'bin', 'traceur-runtime.js');
-var flatPath = path.join(__dirname, '..', 'traceur', 'bin', 'traceur-runtime.js');
+var flatPath = path.join(process.cwd(), 'node_modules', 'traceur', 'bin', 'traceur-runtime.js');
 
 fs.lstat(nestedPath, function(err, stats) {
     if (!err && stats.isDirectory()) {
