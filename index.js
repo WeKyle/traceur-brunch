@@ -51,13 +51,9 @@ var flatPath = path.join(process.cwd(), 'node_modules', 'traceur', 'bin', 'trace
 
 fs.lstat(nestedPath, function(err, stats) {
     if (!err && stats.isDirectory()) {
-        TraceurCompiler.prototype.include = [
-		nestedPath
-	];
+        TraceurCompiler.prototype.include = [nestedPath];
     } else {
-        TraceurCompiler.prototype.include = [
-		flatPath
-	];
+        TraceurCompiler.prototype.include = [flatPath];
     }
 });
 
